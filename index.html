@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paycheck Calculator After Taxes | TakeHomeCalc</title>
+  <meta name="description" content="Estimate your 2026 take-home pay and see how much extra money overtime may add to your paycheck. Federal and FICA calculations for all states, with supported state withholding clearly labeled.">
+  <link rel="canonical" href="https://reddnbre.github.io/takehomecal/">
+  <meta property="og:url" content="https://reddnbre.github.io/takehomecal/">
+  <meta property="og:title" content="TakeHomeCalc Paycheck Calculator">
+  <meta property="og:description" content="Know your pay and decide if overtime is worth it.">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TakeHomeCalc","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+</head>
+<body>
+  <script>
+    if (new URLSearchParams(window.location.search).get("embed") === "overtime") {
+      document.body.classList.add("embedded-calculator");
+    }
+  </script>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="TakeHomeCalc home"><span class="brand-mark">▦</span><span><strong>TakeHomeCalc</strong><small>Know Your Pay. Decide With Confidence.</small></span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Paycheck Calculator</a>
+      <a href="overtime-calculator.html">Overtime Calculator</a>
+      <a href="raise-calculator.html">Raise Calculator</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </header>
+  <main>
+    <div class="hero-row">
+      <div><h1>Paycheck Calculator</h1><p>See your take-home pay and find out if overtime is worth it.</p></div>
+      <div class="badge">◇ 2026 Tax Year · National Federal/FICA Estimates</div>
+    </div>
+    <div class="layout">
+      <form id="paycheckForm" class="panel form-panel">
+        <p id="validationMessage" class="warning" aria-live="polite"></p>
+        <div class="section-title"><span class="step">1</span>Your Pay & Job Details</div>
+        <div class="grid">
+          <label class="field">Pay Type<select name="payType"><option value="hourly">Hourly</option><option value="salary">Salary</option></select></label>
+          <label class="field" data-hourly>Hourly Rate<input name="hourlyRate" type="number" min="0" step="0.01"></label>
+          <label class="field" data-hourly>Regular Hours Per Week<input name="regularHours" type="number" min="0" step="0.25"></label>
+          <label class="field" data-salary>Annual Salary<input name="annualSalary" type="number" min="0" step="100"></label>
+          <label class="field">Pay Frequency<select name="payFrequency"><option value="weekly">Weekly</option><option value="biweekly">Biweekly</option><option value="semimonthly">Semimonthly</option><option value="monthly">Monthly</option></select></label>
+          <label class="field">State<select name="state"><option value="WV">West Virginia</option></select></label>
+        </div>
+        <div class="section-title"><span class="step">2</span>Taxes Withholding (W-4)</div>
+        <div class="grid">
+          <label class="field">Filing Status<select name="filingStatus"><option value="single">Single or Married Filing Separately</option><option value="married">Married Filing Jointly</option><option value="head">Head of Household</option></select></label>
+          <label class="field">Step 3 Credits<input name="step3Credits" type="number" min="0" step="1"></label>
+          <label class="field">Step 4(a) Other Annual Income<input name="step4aOtherIncome" type="number" min="0" step="1"></label>
+          <label class="field">Step 4(b) Annual Deductions<input name="step4bDeductions" type="number" min="0" step="1"></label>
+          <label class="field">Step 4(c) Extra Withholding<input name="step4cExtraWithholding" type="number" min="0" step="1"></label>
+          <label class="field">State Exemptions / Dependents<input name="wvExemptions" type="number" min="0" step="1"></label>
+        </div>
+        <label class="inline field"><input name="step2" type="checkbox"> Step 2: multiple jobs or spouse works</label>
+        <div class="section-title"><span class="step">3</span>Pre-Tax Deductions</div>
+        <label class="field">401(k) Contribution Mode<select name="retirementMode"><option value="percent">Percentage</option><option value="fixed">Fixed Dollar</option></select></label>
+        <div class="grid three">
+          <label class="field" data-retirement-percent>401(k) Percent<input name="retirementPercent" type="number" min="0" max="100" step="0.1"></label>
+          <label class="field" data-retirement-fixed>401(k) Fixed Amount<input name="retirementFixed" type="number" min="0" step="0.01"></label>
+          <label class="field">Health Insurance<input name="healthInsurance" type="number" min="0" step="0.01"></label>
+          <label class="field">HSA / FSA<input name="hsa" type="number" min="0" step="0.01"></label>
+          <label class="field">Other Pre-Tax<input name="otherPreTax" type="number" min="0" step="0.01"></label>
+        </div>
+        <div class="section-title"><span class="step">4</span>Post-Tax Deductions</div>
+        <label class="field">Other Deductions<input name="otherPostTax" type="number" min="0" step="0.01"><span class="hint">Union dues, garnishments, etc.</span></label>
+        <label class="inline field"><input name="remember" type="checkbox"> Remember My Pay Settings</label>
+        <p class="hint">Your data stays on this device.</p>
+        <div class="actions"><button class="primary" type="submit">▦ Calculate My Paycheck</button><button id="resetButton" type="button">↻ Reset</button></div>
+        <button id="clearSaved" type="button">Clear Saved Data</button>
+      </form>
+      <aside>
+        <section class="panel result-panel" aria-live="polite">
+          <span class="pill">2026 Estimates</span>
+          <h2>Your Estimated Paycheck</h2><p>Estimated take-home pay</p>
+          <div id="takeHome" class="big-money">$0.00</div><div class="eyebrow">Estimated Take-Home Pay</div>
+          <div class="breakdown">
+            <div class="line"><span>Gross Pay</span><strong id="grossPay">$0.00</strong></div>
+            <div class="line"><span>Federal Withholding</span><strong id="federalTax">-$0.00</strong></div>
+            <div class="line"><span>Social Security</span><strong id="socialSecurity">-$0.00</strong></div>
+            <div class="line"><span>Medicare</span><strong id="medicare">-$0.00</strong></div>
+            <div class="line"><span id="stateTaxLabel">State Withholding</span><strong id="stateTax">-$0.00</strong></div>
+            <div class="line"><span>401(k)</span><strong id="retirementDeduction">-$0.00</strong></div>
+            <div class="line"><span>Health Insurance</span><strong id="healthDeduction">-$0.00</strong></div>
+            <div class="line"><span>HSA/FSA</span><strong id="hsaDeduction">-$0.00</strong></div>
+            <div class="line"><span>Other Pre-Tax Deductions</span><strong id="otherPreTaxDeduction">-$0.00</strong></div>
+            <div class="line"><span>Other Post-Tax Deductions</span><strong id="postTaxDeduction">-$0.00</strong></div>
+            <div class="line total"><span>Estimated Take-Home Pay</span><strong id="takeHomeFinal" class="money-green">$0.00</strong></div>
+          </div>
+          <p class="hint">This is an estimate based on your inputs and 2026 tax rates. Some states use income-tax estimates rather than employer withholding tables. Actual paychecks may vary.</p>
+        </section>
+        <section id="overtime-card" class="panel overtime-panel">
+          <h2>Is The Overtime Worth It?</h2><p>See how much extra money you'll actually take home.</p>
+          <label for="overtimeHours">Extra Overtime Hours</label>
+          <div class="stepper"><button type="button" data-step-hours="-1">−</button><input id="overtimeHours" name="overtimeHours" form="paycheckForm" type="number" min="0" step="0.25"><button type="button" data-step-hours="1">+</button><span>hours</span></div>
+          <label class="field" for="overtimeMultiplier">Overtime Multiplier<input id="overtimeMultiplier" name="overtimeMultiplier" form="paycheckForm" type="number" min="1" step="0.1"></label>
+          <div class="ot-grid">
+            <div><span class="metric-label">Normal Take-Home</span><span id="normalTakeHome" class="metric-value">$0.00</span></div>
+            <div><span class="metric-label">With Overtime</span><span id="withOvertimeTakeHome" class="metric-value">$0.00</span></div>
+            <div><span class="metric-label">Gross Overtime Pay</span><span id="grossOvertime" class="metric-value">$0.00</span></div>
+            <div><span class="metric-label">Extra Take-Home Pay</span><span id="extraTakeHome" class="metric-value money-green">+$0.00</span></div>
+          </div>
+          <div class="line"><span>Additional Withholding / Deductions</span><strong id="additionalWithholding">-$0.00</strong></div>
+          <div class="purple-callout"><span class="metric-label">Real Take-Home Per OT Hour</span><span id="effectiveOtHour" class="metric-value">$0.00</span></div>
+          <div class="quick"><button type="button" data-hours="4">4 Hours</button><button type="button" data-hours="8">8 Hours</button><button type="button" data-hours="12">12 Hours</button><button type="button" data-hours="0">Custom</button></div>
+        </section>
+      </aside>
+    </div>
+    <section class="panel compare">
+      <h2>Compare Different Overtime Scenarios</h2><p>See how different amounts of overtime impact your take-home pay.</p>
+      <div class="cards">
+        <article class="card center"><h3>4 Extra Hours</h3><div id="scenario4Extra" class="metric-value money-green">+$0.00</div><div class="line"><span>Gross OT Pay</span><strong id="scenario4Gross">$0.00</strong></div><div class="line"><span>Additional Withholding</span><strong id="scenario4Withholding">-$0.00</strong></div><div class="line total"><span>Take-Home Per Hour</span><strong id="scenario4PerHour">$0.00</strong></div></article>
+        <article class="card center"><h3>8 Extra Hours</h3><div id="scenario8Extra" class="metric-value money-green">+$0.00</div><div class="line"><span>Gross OT Pay</span><strong id="scenario8Gross">$0.00</strong></div><div class="line"><span>Additional Withholding</span><strong id="scenario8Withholding">-$0.00</strong></div><div class="line total"><span>Take-Home Per Hour</span><strong id="scenario8PerHour">$0.00</strong></div></article>
+        <article class="card center"><h3>12 Extra Hours</h3><div id="scenario12Extra" class="metric-value money-green">+$0.00</div><div class="line"><span>Gross OT Pay</span><strong id="scenario12Gross">$0.00</strong></div><div class="line"><span>Additional Withholding</span><strong id="scenario12Withholding">-$0.00</strong></div><div class="line total"><span>Take-Home Per Hour</span><strong id="scenario12PerHour">$0.00</strong></div></article>
+      </div>
+    </section>
+    <section class="feature-grid">
+      <article class="panel content-panel"><h2>How Overtime Taxes Work</h2><p>Overtime wages are generally taxed like regular wages. A paycheck with overtime can have higher withholding because the payroll-period wage amount is higher.</p><a href="resources.html">Learn more →</a></article>
+      <article class="panel content-panel"><h2>Withholding vs Tax Liability</h2><p>Payroll withholding estimates what should be held from this paycheck. Your annual tax return reconciles withholding against actual tax liability.</p><a href="resources.html">Learn more →</a></article>
+      <article class="panel content-panel"><h2>Your Privacy Matters</h2><p>Calculations run locally in your browser. V1 has no account, server storage, or analytics trackers.</p><a href="resources.html">Learn more →</a></article>
+    </section>
+    <p class="footer-note"><strong>Disclaimer:</strong> TakeHomeCalc provides estimates for informational purposes only and is not tax, legal, or financial advice.</p>
+  </main>
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
