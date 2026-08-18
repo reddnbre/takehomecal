@@ -178,6 +178,18 @@ button {
 .footer-note { margin-top: 24px; padding: 18px; border-top: 1px solid var(--line); text-align: center; font-size: 0.86rem; color: var(--muted); }
 .warning { min-height: 22px; color: #9a3412; font-weight: 800; }
 [hidden] { display: none !important; }
+.embedded-calculator .site-header,
+.embedded-calculator .hero-row,
+.embedded-calculator .feature-grid,
+.embedded-calculator .footer-note {
+  display: none;
+}
+.embedded-calculator main {
+  padding: 0;
+}
+.embedded-calculator .layout {
+  margin: 0;
+}
 
 @media (max-width: 850px) {
   .site-header, .hero-row { align-items: flex-start; flex-direction: column; }
