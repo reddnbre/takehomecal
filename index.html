@@ -13,6 +13,11 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TakeHomeCalc","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 </head>
 <body>
+  <script>
+    if (new URLSearchParams(window.location.search).get("embed") === "overtime") {
+      document.body.classList.add("embedded-calculator");
+    }
+  </script>
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="TakeHomeCalc home"><span class="brand-mark">▦</span><span><strong>TakeHomeCalc</strong><small>Know Your Pay. Decide With Confidence.</small></span></a>
     <nav class="nav" aria-label="Primary">
@@ -85,7 +90,7 @@
           </div>
           <p class="hint">This is an estimate based on your inputs and 2026 tax rates. Some states use income-tax estimates rather than employer withholding tables. Actual paychecks may vary.</p>
         </section>
-        <section class="panel overtime-panel">
+        <section id="overtime-card" class="panel overtime-panel">
           <h2>Is The Overtime Worth It?</h2><p>See how much extra money you'll actually take home.</p>
           <label for="overtimeHours">Extra Overtime Hours</label>
           <div class="stepper"><button type="button" data-step-hours="-1">−</button><input id="overtimeHours" name="overtimeHours" form="paycheckForm" type="number" min="0" step="0.25"><button type="button" data-step-hours="1">+</button><span>hours</span></div>
