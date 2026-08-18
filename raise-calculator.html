@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pay Raise Take Home Pay Calculator | TakeHomeCalc</title>
+  <meta name="description" content="Estimate how a raise changes your take-home pay per paycheck, per month, and per year using your saved tax profile.">
+  <link rel="canonical" href="https://example.com/raise-calculator.html">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">▦</span><span><strong>TakeHomeCalc</strong><small>Know Your Pay. Decide With Confidence.</small></span></a>
+    <nav class="nav"><a href="index.html">Paycheck Calculator</a><a href="overtime-calculator.html">Overtime Calculator</a><a href="raise-calculator.html" aria-current="page">Raise Calculator</a><a href="resources.html">Resources</a></nav>
+  </header>
+  <main>
+    <div class="hero-row"><div><h1>Raise Calculator</h1><p>See the estimated take-home effect of a new hourly rate or salary.</p></div><div class="badge">Uses your current tax profile when saved</div></div>
+    <div class="layout">
+      <form id="raiseForm" class="panel form-panel">
+        <div class="section-title"><span class="step">1</span>Raise Details</div>
+        <label class="field">Pay Type<select name="payType"><option value="hourly">Hourly</option><option value="salary">Salary</option></select></label>
+        <div class="grid">
+          <label class="field">Current Hourly Rate<input name="currentRate" type="number" min="0" step="0.01"></label>
+          <label class="field">New Hourly Rate<input name="newRate" type="number" min="0" step="0.01"></label>
+          <label class="field">Current Annual Salary<input name="currentSalary" type="number" min="0" step="100"></label>
+          <label class="field">New Annual Salary<input name="newSalary" type="number" min="0" step="100"></label>
+          <label class="field">Regular Hours Per Week<input name="regularHours" type="number" min="0" step="0.25"></label>
+          <label class="field">Pay Frequency<select name="payFrequency"><option value="weekly">Weekly</option><option value="biweekly">Biweekly</option><option value="semimonthly">Semimonthly</option><option value="monthly">Monthly</option></select></label>
+          <label class="field">State<select name="state"><option value="WV">West Virginia</option></select></label>
+          <label class="field">Filing Status<select name="filingStatus"><option value="single">Single or Married Filing Separately</option><option value="married">Married Filing Jointly</option><option value="head">Head of Household</option></select></label>
+        </div>
+        <input name="hourlyRate" type="hidden"><input name="annualSalary" type="hidden"><input name="step3Credits" type="hidden"><input name="step4aOtherIncome" type="hidden"><input name="step4bDeductions" type="hidden"><input name="step4cExtraWithholding" type="hidden"><input name="wvExemptions" type="hidden"><input name="retirementMode" type="hidden"><input name="retirementPercent" type="hidden"><input name="retirementFixed" type="hidden"><input name="healthInsurance" type="hidden"><input name="hsa" type="hidden"><input name="otherPreTax" type="hidden"><input name="otherPostTax" type="hidden"><input name="overtimeMultiplier" type="hidden"><input name="overtimeHours" type="hidden"><input name="step2" type="checkbox" hidden><input name="remember" type="checkbox" hidden>
+      </form>
+      <section class="panel result-panel">
+        <h2>Raise Estimate</h2>
+        <div class="breakdown">
+          <div class="line"><span>Current Estimated Take-Home</span><strong id="raiseCurrent">$0.00</strong></div>
+          <div class="line"><span>New Estimated Take-Home</span><strong id="raiseNew">$0.00</strong></div>
+          <div class="line total"><span>Increase Per Paycheck</span><strong id="raisePerPaycheck" class="money-green">+$0.00</strong></div>
+          <div class="line"><span>Increase Per Month</span><strong id="raisePerMonth">+$0.00</strong></div>
+          <div class="line"><span>Increase Per Year</span><strong id="raisePerYear">+$0.00</strong></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
