@@ -49,6 +49,15 @@ const inputValue = (form, name) => {
   return el.value;
 };
 
+function profileFromUrl(profile = defaults) {
+  const params = new URLSearchParams(window.location.search);
+  const state = params.get("state")?.toUpperCase();
+  if (state && STATES.some(([code]) => code === state)) {
+    return { ...profile, state };
+  }
+  return profile;
+}
+
 function populateStateSelects() {
   document.querySelectorAll('select[name="state"]').forEach((select) => {
     const current = select.value || defaults.state;
@@ -158,7 +167,7 @@ function renderOvertime(profile, hours) {
 }
 
 export function wireCalculator(form) {
-  populateForm(form, loadProfile() || defaults);
+  populateForm(form, profileFromUrl(loadProfile() || defaults));
   const recalc = () => {
     togglePayType(form);
     toggleRetirementMode(form);
@@ -209,7 +218,7 @@ export function wireCalculator(form) {
 }
 
 export function wireRaiseCalculator(form) {
-  populateForm(form, loadProfile() || defaults);
+  populateForm(form, profileFromUrl(loadProfile() || defaults));
   const recalc = () => {
     const profile = readProfile(form);
     const current = calculatePaycheck({ ...profile, hourlyRate: form.elements.currentRate.value, annualSalary: form.elements.currentSalary.value }, 0);
